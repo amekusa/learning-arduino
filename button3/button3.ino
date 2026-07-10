@@ -25,22 +25,21 @@ enum Mode {
 
 Mode mode = Mode::OFF;
 
-Button* btn = nullptr;
+Button btn(BTN_PIN, 20);
 
 void setup() {
 	pinMode(LED_PIN, OUTPUT);
 	pinMode(BTN_PIN, INPUT_PULLUP);
 
-	btn = new Button(BTN_PIN, 20);
-	btn->onPressed(btnPressed);
-	btn->onReleased(btnReleased);
+	btn.onPressed(btnPressed);
+	btn.onReleased(btnReleased);
 
 	Serial.begin(9600); // bps: 9600
 	Serial.println("Setup done");
 }
 
 void loop() {
-	btn->update();
+	btn.update();
 	switch (mode) {
 	case Mode::NORMAL:
 		analogWrite(LED_PIN, 255);
