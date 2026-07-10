@@ -17,8 +17,6 @@
 const int LED_PIN = 9;
 const int BTN_PIN = 2;
 
-const long BTN_DBNC = 20;
-
 enum Mode {
 	NORMAL,
 	FADE,
