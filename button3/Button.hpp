@@ -4,13 +4,13 @@ class Button {
 public:
 	using EventHandler = void (*)();
 
-	Button(int pin, long debounce) {
+	Button(int pin, unsigned long debounce) {
 		_pin = pin;
 		_debounce = debounce;
 	}
 
 	void update() {
-		long now = millis();
+		unsigned long now = millis();
 		if (now - _lastChanged >= _debounce) {
 			bool isDown = digitalRead(_pin) == LOW;
 			if (isDown != _isDown) {
@@ -41,8 +41,8 @@ public:
 
 private:
 	int _pin;
-	long _debounce;
-	long _lastChanged = 0;
+	unsigned long _debounce;
+	unsigned long _lastChanged = 0;
 	bool _isDown = false;
 	EventHandler _onPressed = nullptr;
 	EventHandler _onReleased = nullptr;
