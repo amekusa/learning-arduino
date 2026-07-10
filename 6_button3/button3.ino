@@ -1,16 +1,22 @@
 // Learning Arduino
 // 2026/07/10
-// Show necessary info:
-//   arduino-cli board list
-// Monitor logs:
-//   arduino-cli monitor -p /dev/cu.usbmodemXXXX -c baudrate=9600
-// Compile & Upload:
-//   arduino-cli compile --fqbn arduino:renesas_uno:minima
-//   arduino-cli upload -p /dev/cu.usbmodemXXXX --fqbn arduino:renesas_uno:minima
+//
+// Commands:
+//   Show necessary info:
+//     arduino-cli board list
+//   Monitor logs:
+//     arduino-cli monitor -p /dev/cu.usbmodemXXXX -c baudrate=9600
+//   Compile & Upload:
+//     arduino-cli compile --fqbn arduino:renesas_uno:minima
+//     arduino-cli upload -p /dev/cu.usbmodemXXXX --fqbn arduino:renesas_uno:minima
 //
 // Goal:
 //   Switching LED lighting patterns with a button.
 //   The button must be chatter-proof with 20ms debounce time.
+//
+// Circuit:
+//   D9 - R220 - LED - GND
+//   D2 - BTN - GND
 
 #include "Button.hpp";
 
