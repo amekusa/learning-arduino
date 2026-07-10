@@ -11,7 +11,7 @@ public:
 
 	void update() {
 		long now = millis();
-		if (now > _lastChanged + _debounce) {
+		if (now - _lastChanged >= _debounce) {
 			bool isDown = digitalRead(_pin) == LOW;
 			if (isDown != _isDown) {
 				_isDown = isDown;
