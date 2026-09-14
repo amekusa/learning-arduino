@@ -12,15 +12,14 @@ void loop() {
 		case '\r':
 			break; // ignore
 		case '\n':
+			buf[bufLength] = '\0'; // end of string
 			Serial.println(buf);
-			// clear buffer
-			for (int i = 0; i < bufLength; i++) {
-				buf[i] = '\0';
-			}
 			bufLength = 0;
 			break;
 		default:
-			buf[bufLength++] = c;
+			if (bufLength < sizeof(buf) - 1) { // -1 is the room for `\0`
+				buf[bufLength++] = c;
+			}
 		}
 	}
 }
