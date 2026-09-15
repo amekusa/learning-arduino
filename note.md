@@ -13,7 +13,7 @@ PWM = パルス幅変調。
 ## C++
 
 ### '' vs ""
-```cpp
+```c
 char a = 'a';  // OK
 char a = "a";  // エラー（"a" は 'a' + '\0' のため）
 ```
@@ -21,7 +21,7 @@ char a = "a";  // エラー（"a" は 'a' + '\0' のため）
 ### C 文字列
 C 文字列とは終端文字 `'\0'` で終わっている char 配列のこと。
 
-```cpp
+```c
 char abc[] = {'a', 'b', 'c', '\0'};  // C 文字列
 char def[] = {'d', 'e', 'f'};        // C 文字列ではない
 ```
@@ -29,14 +29,14 @@ char def[] = {'d', 'e', 'f'};        // C 文字列ではない
 C 文字列と文字列リテラルは違うものであることを留意すべきである。
 
 char 配列に文字列リテラルを代入すると C 文字列に変換される:
-```cpp
+```c
 char abc1[] = {'a', 'b', 'c', '\0'};  // C 文字列
 char abc2[] = "abc";  // abc1 と同じ
 char* abc3 = "abc";   // 同じではない
 ```
 
 ### ポインタ
-```cpp
+```c
 char* msg
 ```
 `*` はポインタであることを表す。
@@ -51,7 +51,7 @@ char* msg
 - * や -> を書かなくていい
 
 関数の引数でよく使う:
-```cpp
+```c
 void printValue(const int& value);
 ```
 これは、
@@ -66,7 +66,7 @@ void printValue(const int& value);
 所有権を渡したい       → 値渡し / スマートポインタ
 
 ### 配列
-```cpp
+```c
 int nums[] = {1, 2, 3};
 nums[0]  // 1
 nums[1]  // 2
@@ -76,7 +76,7 @@ nums[2]  // 3
 ### array-to-pointer decay
 配列変数を式に使うと、「先頭要素へのポインタ」に暗黙的に変換される。
 
-```cpp
+```c
 int nums[] = {1, 2, 3};
 int* ptrA = nums;      // nums は &nums[0] に変換される
 int* ptrB = &nums[0];  // ptrA と同じ意味
@@ -86,17 +86,17 @@ int* ptrB = &nums[0];  // ptrA と同じ意味
 `&` を使っているが参照ではないことに注意。
 
 ### struct vs class
-struct と class はほぼ同じ。違いの第一歩は「デフォルトが public か private か。
+struct と class はほぼ同じ。違いの第一歩は「デフォルトが public か private か」。
 
 ### プリプロセッサ
-```cpp
+```c
 #include "Foo.hpp"  // 別のソースを読み込む
 #pragma once        // これを書いたソースは一度しか #include されない
 ```
 
 ### for
 配列をイテレートする:
-```cpp
+```c
 for (int num : nums) {
 	...
 }
@@ -108,12 +108,12 @@ for (let num of nums) {
 }
 ```
 型を書きたくない場合は `auto` を使う:
-```cpp
+```c
 for (auto item : items) {
 ```
 
 ### 集成初期化（aggregate initialization） 
-```cpp
+```c
 struct Person {
 	const char* name;
 	int age;
@@ -128,7 +128,7 @@ person.age   // 7
 `{ }` 内に列挙した値が、`struct / class` の `public` メンバにマッピングされて初期化される。
 マッピングはメンバの宣言の順番に従う。
 
-```cpp
+```c
 struct Person {
 	const char* name;
 	int age;
@@ -139,13 +139,16 @@ Person people[] = {
 	{"Bob",     14},
 	{"Charlie", 28},
 };
+
+people[1].name  // "Bob"
+people[1].age   // 14
 ```
 このように書くこともできる。
 
 ## Arduino APIs
 
 ### Serial
-```cpp
+```c
 char c = Serial.read();  //  1 バイト読み込む
 ```
 
