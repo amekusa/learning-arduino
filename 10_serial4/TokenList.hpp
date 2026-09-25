@@ -1,7 +1,7 @@
 #pragma once
 #include <string.h>
 
-class Tokens {
+class TokenList {
 private:
 	static constexpr size_t MAX_ITEMS = 8;
 
@@ -9,7 +9,7 @@ private:
 	size_t _itemsN = 0;
 
 public:
-	Tokens(char* str, const char* sep) {
+	TokenList(char* str, const char* sep) {
 		char* token = strtok(str, sep);
 		while (token != nullptr && _itemsN < MAX_ITEMS) {
 			_items[_itemsN++] = token;
