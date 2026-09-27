@@ -39,6 +39,20 @@ void setup() {
 	pinMode(LED_PIN, OUTPUT);
 	Serial.begin(9600); // bps: 9600
 
+	cli.addCommand("help", [](const TokenList&) {
+		Serial.print(R"(
+Commands:
+  led on
+  led off
+  led normal
+  led fade
+  led brightness|br <0-100>
+  help
+
+)"
+		);
+	});
+
 	cli.addCommand("led", [](const TokenList& args) {
 		const char* a1 = args.get(1);
 		if (a1 == nullptr) {
@@ -72,6 +86,7 @@ void setup() {
 			return;
 		}
 	});
+
 }
 
 void loop() {
