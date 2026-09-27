@@ -20,7 +20,11 @@
 
 const int LED_PIN = 9;
 
-CommandParser cli;
+const int LED_BR_MAX = 255;
+const int LED_BR_MIN = 0;
+
+int led_br = LED_BR_MAX;
+bool led_on = true;
 
 enum Mode {
 	NORMAL,
@@ -28,8 +32,8 @@ enum Mode {
 };
 
 Mode mode = Mode::NORMAL;
-bool on = true;
 
+CommandParser cli;
 
 void setup() {
 	pinMode(LED_PIN, OUTPUT);
@@ -37,29 +41,54 @@ void setup() {
 
 	cli.addCommand("led", [](const TokenList& args) {
 		const char* a1 = args.get(1);
+		if (a1 == nullptr) {
+			Serial.println("[ERROR] Missing argument.");
+			return;
+		}
 		if (strcmp(a1, "on") == 0) {
-			on = true;
+			led_on = true;
+
 		} else if (strcmp(a1, "off") == 0) {
-			on = false;
+			led_on = false;
+
 		} else if (strcmp(a1, "normal") == 0) {
 			mode = NORMAL;
+
 		} else if (strcmp(a1, "fade") == 0) {
 			mode = FADE;
+
+		} else if (strcmp(a1, "brightness") == 0 || strcmp(a1, "br") == 0) {
+			const char* a2 = args.get(2); // assuming 0 - 100
+			if (a2 == nullptr) {
+				Serial.println("[ERROR] Invalid argument");
+				return;
+			}
+			led_br = constrainedMap(atoi(a2), 0, 100, LED_BR_MIN, LED_BR_MAX);
+			Serial.print("led_br: ");
+			Serial.println(led_br);
+
+		} else {
+			Serial.println("[ERROR] Invalid argument.");
+			return;
 		}
 	});
 }
 
 void loop() {
 	cli.update();
-	updateLED();
+	updateLed();
 	delay(5);
 }
 
-void updateLED() {
-	if (on) {
+long constrainedMap(long x, long min1, long max1, long min2, long max2) {
+	return constrain(map(x, min1, max1, min2, max2), min2, max2);
+}
+
+void updateLed() {
+	if (led_on) {
 		switch (mode) {
 		case Mode::NORMAL:
-			analogWrite(LED_PIN, 255);
+			analogWrite(LED_PIN, led_br);
 			break;
 		case Mode::FADE:
 			fade();
@@ -75,7 +104,7 @@ void fade() {
 	static const float angle_dlt = .01f;
 	static const float angle_max = 2.0f * PI;
 
-	analogWrite(LED_PIN, round((sin(angle) + 1.0f) * 127.5f));
+	analogWrite(LED_PIN, constrainedMap(sin(angle) * 50, -50, 50, LED_BR_MIN, led_br));
 
 	angle += angle_dlt;
 	if (angle >= angle_max) angle -= angle_max;
