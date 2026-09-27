@@ -104,7 +104,7 @@ void fade() {
 	static const float angle_dlt = .01f;
 	static const float angle_max = 2.0f * PI;
 
-	analogWrite(LED_PIN, constrainedMap(sin(angle) * 50, -50, 50, LED_BR_MIN, led_br));
+	analogWrite(LED_PIN, constrainedMap(sin(angle) * 1000, -1000, 1000, LED_BR_MIN, led_br));
 
 	angle += angle_dlt;
 	if (angle >= angle_max) angle -= angle_max;
