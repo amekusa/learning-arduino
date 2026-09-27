@@ -14,8 +14,7 @@ private:
 	size_t _cmdsN = 0;
 
 public:
-	CommandParser() {
-	}
+	CommandParser() {}
 
 	void update() {
 		while (Serial.available()) {
